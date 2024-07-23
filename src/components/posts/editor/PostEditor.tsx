@@ -9,6 +9,8 @@ import { useSession } from "@/app/(main)/SessionProvider";
 import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
 import { Loader2 } from "lucide-react";
+import "./styles.css";
+
 export default function PostEditor() {
   const { user } = useSession();
   const [isPending, startTransition] = useTransition();
