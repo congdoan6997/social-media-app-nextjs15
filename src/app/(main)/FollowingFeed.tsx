@@ -8,7 +8,7 @@ import { PostsPage } from "@/lib/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 
-export default function ForYouNeed() {
+export default function FollowingFeed() {
   const {
     data,
     fetchNextPage,
@@ -17,11 +17,11 @@ export default function ForYouNeed() {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ["for-you", "post-feed"],
+    queryKey: ["following", "post-feed"],
     queryFn: ({ pageParam }) =>
       kyInstance
         .get(
-          "/api/posts/for-you",
+          "/api/posts/following",
           pageParam ? { searchParams: { cursor: pageParam } } : {},
         )
         .json<PostsPage>(),
@@ -38,7 +38,7 @@ export default function ForYouNeed() {
   if (status === "success" && !posts.length && !hasNextPage) {
     return (
       <p className="text-center text-muted-foreground">
-        No posts found. Try changing the filters
+        No posts found. Start following people to see their posts here
       </p>
     );
   }
