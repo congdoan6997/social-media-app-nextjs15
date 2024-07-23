@@ -10,10 +10,12 @@ import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
 import { Loader2 } from "lucide-react";
 import "./styles.css";
+import { useSubmitPostMutation } from "./mutations";
+import LoadingButton from "@/components/LoadingButton";
 
 export default function PostEditor() {
   const { user } = useSession();
-  const [isPending, startTransition] = useTransition();
+  const mutation = useSubmitPostMutation();
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -31,9 +33,10 @@ export default function PostEditor() {
     }) || "";
 
   function onSubmit() {
-    startTransition(async () => {
-      await createPost(input);
-      editor?.commands.clearContent();
+    mutation.mutate(input, {
+      onSuccess: () => {
+        editor?.commands.clearContent();
+      },
     });
   }
   return (
@@ -46,14 +49,14 @@ export default function PostEditor() {
         />
       </div>
       <div className="flex justify-end">
-        <Button
+        <LoadingButton
+          loading={mutation.isPending}
           onClick={onSubmit}
-          disabled={!input.trim() || isPending}
-          className="flex min-w-20 items-center gap-2"
+          disabled={!input.trim()}
+          className="min-w-20"
         >
-          {isPending && <Loader2 className="size-4 animate-spin" />}
           Post
-        </Button>
+        </LoadingButton>
       </div>
     </div>
   );
