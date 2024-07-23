@@ -20,3 +20,8 @@ export const userDataSelect = {
   displayName: true,
   avatarUrl: true,
 } satisfies Prisma.UserSelect;
+
+export interface PostsPage {
+  posts: PostData[];
+  nextCursor: string | null;
+}
