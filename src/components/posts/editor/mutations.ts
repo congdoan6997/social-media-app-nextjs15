@@ -9,6 +9,7 @@ import { createPost } from "./actions";
 import { PostsPage } from "@/lib/types";
 import { useSession } from "@/app/(main)/SessionProvider";
 
+// ! TODO fix for you page dont refetch when you create a new post!!
 export function useSubmitPostMutation() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
