@@ -22,7 +22,7 @@ export function getUserDataSelect(loggedInUserId: string) {
         posts: true,
       },
     },
-  } as Prisma.UserSelect;
+  } satisfies Prisma.UserSelect;
 }
 
 export function getPostDataInclude(loggedInUserId: string) {
@@ -30,7 +30,7 @@ export function getPostDataInclude(loggedInUserId: string) {
     user: {
       select: getUserDataSelect(loggedInUserId),
     },
-  } as Prisma.PostInclude;
+  } satisfies Prisma.PostInclude;
 }
 
 export type UserData = Prisma.UserGetPayload<{
