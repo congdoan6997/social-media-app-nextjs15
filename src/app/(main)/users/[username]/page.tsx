@@ -12,6 +12,7 @@ import { cache } from "react";
 import UserPosts from "./UserPosts";
 import Linkify from "@/components/Linkify";
 import EditProfileButton from "./EditProfileButton";
+import TrendsSidebar from "@/components/TrendsSidebar";
 
 interface UserPageProps {
   params: {
@@ -68,6 +69,7 @@ export default async function UserPage({ params }: UserPageProps) {
 
         <UserPosts userId={user.id} />
       </div>
+      <TrendsSidebar />
     </main>
   );
 }
