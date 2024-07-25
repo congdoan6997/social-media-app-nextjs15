@@ -44,6 +44,14 @@ export function getPostDataInclude(loggedInUserId: string) {
         likes: true,
       },
     },
+    bookmarks: {
+      where: {
+        userId: loggedInUserId,
+      },
+      select: {
+        userId: true,
+      },
+    },
   } satisfies Prisma.PostInclude;
 }
 
@@ -68,4 +76,8 @@ export interface FollowerInfo {
 export interface LikeInfo {
   likes: number;
   isLikedByUser: boolean;
+}
+
+export interface BookmarkInfo {
+  isBookmarkedByUser: boolean;
 }
