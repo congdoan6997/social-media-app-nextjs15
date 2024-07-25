@@ -17,7 +17,7 @@ export default function ForYouNeed() {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ["for-you", "post-feed"],
+    queryKey: ["post-feed", "for-you"],
     queryFn: ({ pageParam }) =>
       kyInstance
         .get(
