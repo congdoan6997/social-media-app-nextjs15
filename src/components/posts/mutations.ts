@@ -46,7 +46,7 @@ export function useDeletePostMutation() {
       });
       router.push(pathname);
 
-      if (pathname === `/post/${deletedPost.id}`) {
+      if (pathname === `/posts/${deletedPost.id}`) {
         router.push(`/users/${deletedPost.user.username}`);
       }
     },
