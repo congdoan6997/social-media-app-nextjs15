@@ -39,7 +39,7 @@ export default function UserTooltip({ user, children }: UserTooltipProps) {
               <Link href={`/users/${user.username}`}>
                 <UserAvatar avatarUrl={user.avatarUrl} size={70} />
               </Link>
-              {user.id === loggedInUser?.id && (
+              {user.id !== loggedInUser?.id && (
                 <FollowButton userId={user.id} initialState={followerState} />
               )}
             </div>
