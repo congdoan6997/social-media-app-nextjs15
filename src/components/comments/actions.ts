@@ -12,20 +12,34 @@ export async function submitComment({
   post: PostData;
   content: string;
 }) {
-  const { user } = await validateRequest();
+  const { user: loggedInUser } = await validateRequest();
 
-  if (!user) throw new Error("Unauthorized");
+  if (!loggedInUser) throw new Error("Unauthorized");
 
   const { content: contentValid } = createCommentSchema.parse({ content });
+  const [newComment] = await prisma.$transaction([
+    prisma.comment.create({
+      data: {
+        content: contentValid,
+        userId: loggedInUser.id,
+        postId: post.id,
+      },
+      include: getCommentDataInclude(loggedInUser.id),
+    }),
+    ...(post.user.id !== loggedInUser.id
+      ? [
+          prisma.notification.create({
+            data: {
+              type: "COMMENT",
+              recipientId: post.user.id,
+              issuerId: loggedInUser.id,
+              postId: post.id,
+            },
+          }),
+        ]
+      : []),
+  ]);
 
-  const newComment = await prisma.comment.create({
-    data: {
-      content: contentValid,
-      userId: user.id,
-      postId: post.id,
-    },
-    include: getCommentDataInclude(user.id),
-  });
   return newComment;
 }
 
