@@ -40,6 +40,11 @@ export async function GET(req: NextRequest) {
         },
       })
       .json<{ id: string; name: string }>();
+    if (!googleUser) {
+      return new Response(null, {
+        status: 400,
+      });
+    }
 
     const existingUser = await prisma.user.findUnique({
       where: {
