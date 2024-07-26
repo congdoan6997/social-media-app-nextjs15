@@ -14,7 +14,7 @@ export async function updateUserProfile(values: UpdateUserProfileValues) {
   const { user } = await validateRequest();
 
   if (!user) throw new Error("Unauthorized");
-  await prisma.$transaction(async (tx) => {
+  const updatedUser = await prisma.$transaction(async (tx) => {
     const updatedUser = await tx.user.update({
       where: {
         id: user.id,
@@ -30,4 +30,6 @@ export async function updateUserProfile(values: UpdateUserProfileValues) {
     });
     return updatedUser;
   });
+
+  return updatedUser;
 }
