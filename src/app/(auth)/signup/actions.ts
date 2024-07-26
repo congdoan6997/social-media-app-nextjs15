@@ -56,7 +56,7 @@ export async function signUp(
     }
 
     await prisma.$transaction(async (tx) => {
-      await prisma.user.create({
+      await tx.user.create({
         data: {
           id: userId,
           username,
