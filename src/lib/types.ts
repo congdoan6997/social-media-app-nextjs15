@@ -126,3 +126,7 @@ export interface NotificationsPage {
 export interface NotificationCountInfo {
   unreadCount: number;
 }
+
+export interface MessageCountInfo {
+  unreadCount: number;
+}
